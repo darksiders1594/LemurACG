@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" th:href="@{/img/logo.png}" sizes="144x144"/>
+    <title>Lemur Player</title>
+
+    <!--  播放器的样式  -->
+    <style>
+        #lemur-player {
+            width: 1280px;
+            height: 720px;
+            left: 155px;
+            top: 72px;
+            background: rgba(33,33,33,1.0);
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="lemur-player"></div>
+
+    <script th:src="@{/js/dash.all.min.js}"></script>
+    <script th:src="@{/js/LemurPlayer.min.js}"></script>
+    <script>
+        const lemurPlayer = new LemurPlayer({
+            container: document.getElementById('lemur-player'),
+            autoplay: false,
+            preload: 'auto',
+            video: {
+                quality: [
+                    {
+                        name: '1080P',
+                        url: 'http://localhost:8080/upload/video/100002/The Curse of the Black Pearl.mpd',
+                        type: 'dash'
+                    }
+                ],
+                defaultQuality: 0
+            },
+            danmaku: {
+                id: '10001',
+                api: 'http://localhost:8080/video/',
+                maximum: 3000,
+                userID: '1',
+                bottom: '15%',
+                unlimited: false,
+                speedRate: 0.5
+            },
+            contextmenu: [
+                {
+                    text: 'LemurPlayer',
+                    link: 'https://github.com/darksiders1594/lemur-player'
+                }
+            ]
+        });
+    </script>
+
+</body>
+</html>

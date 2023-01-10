@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.personal.lemuracg.dao.DanmakuMapper">
+
+    <!--  向 MySQL 插入一条弹幕记录  -->
+    <sql id="insertFields">
+        danmaku_id, user_id, time, text, color, type, create_time
+    </sql>
+
+    <sql id="insertData">
+        #{danmakuID}, #{userID}, #{time}, #{text}, #{color}, #{type}, #{createTime}
+    </sql>
+
+    <insert id="insertDanmaku" parameterType="Danmaku" keyProperty="id">
+        insert into danmaku (<include refid="insertFields"/>)
+        values (<include refid="insertData"/>)
+    </insert>
+
+    <!--  根据 danmakuID 在 MySQL 中查询弹幕数据, maximum 为查询上限  -->
+    <sql id="selectFields">
+        user_id, text, time, color, type, create_time
+    </sql>
+
+    <select id="selectByDanmakuID" resultType="Danmaku">
+        SELECT <include refid="selectFields"/>
+        FROM danmaku
+        WHERE danmaku_id = #{danmakuID}
+        ORDER BY create_time DESC
+        LIMIT #{maximum}
+    </select>
+
+</mapper>
